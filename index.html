@@ -15,7 +15,7 @@
       content="AI-powered agronomic advice and weather-timed nudges for smallholder farmers — in their language, on WhatsApp."
     />
     <meta property="og:type" content="website" />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='10' y1='10' x2='54' y2='54' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%2359ff9c'/%3E%3Cstop offset='1' stop-color='%2346b0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M12 36c0-18 16-26 26-26 12 0 18 7 18 18 0 22-18 28-30 28-7 0-14-4-14-20Z' fill='url(%23g)' fill-opacity='.90'/%3E%3Cpath d='M20 46c10-2 18-10 22-22' stroke='rgba(255,255,255,.72)' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M34 18v30' stroke='rgba(255,255,255,.28)' stroke-width='2'/%3E%3Cpath d='M34 24h12M34 32h14M34 40h10' stroke='rgba(255,255,255,.22)' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='46' cy='24' r='2.1' fill='rgba(255,255,255,.52)'/%3E%3Ccircle cx='50' cy='32' r='2.1' fill='rgba(255,255,255,.52)'/%3E%3Ccircle cx='44' cy='40' r='2.1' fill='rgba(255,255,255,.52)'/%3E%3C/svg%3E" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='10' y1='10' x2='54' y2='54' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%2359ff9c'/%3E%3Cstop offset='1' stop-color='%2346b0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='28' fill='rgba(255,255,255,.06)'/%3E%3Cpath d='M14 36c0-17 15-25 25-25 12 0 17 7 17 17 0 21-17 27-29 27-7 0-13-4-13-19Z' fill='url(%23g)'/%3E%3Cpath d='M22 45c9-2 16-9 20-20' stroke='rgba(255,255,255,.80)' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M34 18v30' stroke='rgba(255,255,255,.30)' stroke-width='3'/%3E%3Cpath d='M34 26h14M34 36h14' stroke='rgba(255,255,255,.22)' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" />
 
     <style>
       :root {
@@ -79,9 +79,9 @@
         letter-spacing: 0.2px;
       }
       .mark {
-        width: 18px;
-        height: 18px;
-        filter: drop-shadow(0 0 18px rgba(89, 255, 156, 0.25));
+        width: 22px;
+        height: 22px;
+        filter: drop-shadow(0 0 18px rgba(89, 255, 156, 0.22));
       }
 
       .pillrow {
@@ -264,20 +264,18 @@
                 <stop offset="1" stop-color="var(--brand2)" />
               </linearGradient>
             </defs>
+            <!-- Badge (improves small-size readability on dark backgrounds) -->
+            <circle cx="32" cy="32" r="28" fill="rgba(255,255,255,.06)" />
             <!-- Split leaf: half organic, half tech grid -->
             <path
-              d="M12 36c0-18 16-26 26-26 12 0 18 7 18 18 0 22-18 28-30 28-7 0-14-4-14-20Z"
+              d="M14 36c0-17 15-25 25-25 12 0 17 7 17 17 0 21-17 27-29 27-7 0-13-4-13-19Z"
               fill="url(#markGrad)"
-              fill-opacity=".88"
             />
             <!-- Vein -->
-            <path d="M20 46c10-2 18-10 22-22" stroke="rgba(255,255,255,.75)" stroke-width="3" stroke-linecap="round" />
-            <!-- Tech half: spine + short ribs + nodes (reads clean at small sizes) -->
-            <path d="M34 18v30" stroke="rgba(255,255,255,.28)" stroke-width="2" />
-            <path d="M34 24h12M34 32h14M34 40h10" stroke="rgba(255,255,255,.22)" stroke-width="2" stroke-linecap="round" />
-            <circle cx="46" cy="24" r="2.1" fill="rgba(255,255,255,.52)" />
-            <circle cx="50" cy="32" r="2.1" fill="rgba(255,255,255,.52)" />
-            <circle cx="44" cy="40" r="2.1" fill="rgba(255,255,255,.52)" />
+            <path d="M22 45c9-2 16-9 20-20" stroke="rgba(255,255,255,.80)" stroke-width="4" stroke-linecap="round" />
+            <!-- Tech half: spine + two ribs (no tiny nodes) -->
+            <path d="M34 18v30" stroke="rgba(255,255,255,.30)" stroke-width="3" />
+            <path d="M34 26h14M34 36h14" stroke="rgba(255,255,255,.22)" stroke-width="3" stroke-linecap="round" />
           </svg>
           <span>AgriNexus AI</span>
         </div>

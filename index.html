@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="AgriNexus AI — WhatsApp agricultural advisory with closed-loop nudges. Demo video, proof, architecture, and pilot enquiries."
+    />
+    <title>AgriNexus AI — From advice to action on WhatsApp</title>
+
+    <meta property="og:title" content="AgriNexus AI — From advice to action on WhatsApp" />
+    <meta
+      property="og:description"
+      content="AI-powered agronomic advice and weather-timed nudges for smallholder farmers — in their language, on WhatsApp."
+    />
+    <meta property="og:type" content="website" />
+
+    <style>
+      :root {
+        --bg: #070a12;
+        --panel: rgba(255, 255, 255, 0.06);
+        --panel2: rgba(255, 255, 255, 0.08);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.72);
+        --faint: rgba(255, 255, 255, 0.55);
+        --line: rgba(255, 255, 255, 0.12);
+        --brand: #59ff9c;
+        --brand2: #46b0ff;
+        --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+        --radius: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue",
+          Arial, "Noto Sans", "Liberation Sans", sans-serif;
+        background: radial-gradient(1200px 700px at 10% 0%, rgba(70, 176, 255, 0.18), transparent 60%),
+          radial-gradient(900px 600px at 90% 10%, rgba(89, 255, 156, 0.14), transparent 55%),
+          radial-gradient(1200px 900px at 50% 100%, rgba(116, 84, 255, 0.12), transparent 60%),
+          var(--bg);
+        color: var(--text);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 28px 18px 72px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 10px 0 22px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 99px;
+        background: linear-gradient(135deg, var(--brand), var(--brand2));
+        box-shadow: 0 0 22px rgba(89, 255, 156, 0.35);
+      }
+
+      .pillrow {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .pill {
+        font-size: 12px;
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--muted);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+        align-items: stretch;
+      }
+      @media (max-width: 900px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+        border-radius: var(--radius);
+        padding: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: 44px;
+        line-height: 1.06;
+        letter-spacing: -0.02em;
+      }
+      @media (max-width: 520px) {
+        h1 {
+          font-size: 36px;
+        }
+      }
+      .sub {
+        margin: 0 0 16px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.55;
+      }
+
+      .ctaRow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        font-weight: 650;
+      }
+      .btn.primary {
+        border-color: rgba(89, 255, 156, 0.35);
+        background: linear-gradient(135deg, rgba(89, 255, 156, 0.20), rgba(70, 176, 255, 0.14));
+      }
+      .btn:hover {
+        background: rgba(255, 255, 255, 0.09);
+        text-decoration: none;
+      }
+      .hint {
+        font-size: 12px;
+        color: var(--faint);
+        margin-top: 10px;
+      }
+
+      .kpis {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .kpi {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 14px;
+        padding: 12px 12px;
+      }
+      .kpi .v {
+        font-size: 18px;
+        font-weight: 750;
+      }
+      .kpi .l {
+        margin-top: 4px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .section {
+        margin-top: 18px;
+      }
+      .section h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        letter-spacing: -0.01em;
+      }
+      .bullets {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+      .bullets li {
+        margin: 8px 0;
+      }
+
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      @media (max-width: 900px) {
+        .grid2 {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .video {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .video iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      .footer {
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+        color: var(--faint);
+        font-size: 12px;
+      }
+      .footer a {
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="logo">
+          <span class="dot" aria-hidden="true"></span>
+          <span>AgriNexus AI</span>
+        </div>
+        <div class="pillrow">
+          <span class="pill">WhatsApp-first</span>
+          <span class="pill">AWS Serverless</span>
+          <span class="pill">Amazon Bedrock</span>
+          <span class="pill">Closed-loop nudges</span>
+        </div>
+      </div>
+
+      <div class="hero">
+        <div class="card">
+          <h1>From advice to action on WhatsApp.</h1>
+          <p class="sub">
+            AgriNexus AI gives smallholder farmers fast, local-language agronomic guidance — then
+            follows up until the farmer confirms action. Built on AWS Serverless + Amazon Bedrock
+            (RAG + Vision) with production observability.
+          </p>
+
+          <div class="ctaRow">
+            <a
+              class="btn primary"
+              href="mailto:prasad@prasadtilloo.com?subject=AgriNexus%20Pilot%20Enquiry&body=Hi%20Prasad%2C%0A%0AWe%E2%80%99d%20like%20to%20discuss%20a%20pilot%20for%20AgriNexus%20AI.%0A%0A1)%20Organization%3A%0A2)%20Region%2Fdistricts%3A%0A3)%20Estimated%20farmers%20in%20cohort%3A%0A4)%20Crops%20of%20focus%3A%0A5)%20Preferred%20language(s)%3A%0A%0AThanks%2C%0A"
+              >Pilot enquiries (email)</a
+            >
+            <a class="btn" href="https://wa.me/4915120105731" target="_blank" rel="noreferrer"
+              >Try on WhatsApp</a
+            >
+            <a class="btn" href="https://github.com/prasadt1/agrinexus-ai" target="_blank" rel="noreferrer"
+              >View code</a
+            >
+          </div>
+          <div class="hint">
+            Tip: Use the email button for pilots/partners (NGO, input company, or government program).
+          </div>
+
+          <div class="kpis">
+            <div class="kpi">
+              <div class="v">11</div>
+              <div class="l">Lambdas deployed (prod)</div>
+            </div>
+            <div class="kpi">
+              <div class="v">144</div>
+              <div class="l">EARS requirements traced to code</div>
+            </div>
+            <div class="kpi">
+              <div class="v">80%</div>
+              <div class="l">Test-to-code ratio (repo metric)</div>
+            </div>
+            <div class="kpi">
+              <div class="v">~$0.54</div>
+              <div class="l">Per farmer / year @ 10K (modeled)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Demo (3 minutes)</h2>
+          <div class="video" aria-label="AgriNexus AI demo video">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/Hr9EcblzkwI"
+              title="AgriNexus AI demo"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <div class="section">
+            <h2>What it does</h2>
+            <ul class="bullets">
+              <li><b>Text / voice / photo</b> queries via WhatsApp (no app install).</li>
+              <li><b>Grounded answers</b> via Bedrock Knowledge Base RAG (FAO/ICAR sources).</li>
+              <li><b>Vision diagnosis</b> with deterministic gates + structured schema.</li>
+              <li><b>Closed-loop nudges</b> with T+24h / T+48h follow-ups until DONE/EXPIRED.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section grid2">
+        <div class="card">
+          <h2>Why this matters</h2>
+          <ul class="bullets">
+            <li>
+              Farmers don’t lose crops because advice doesn’t exist — they lose crops because advice arrives
+              after the window closes.
+            </li>
+            <li>
+              Extension capacity is limited, but WhatsApp is already in farmers’ hands.
+            </li>
+            <li>
+              The differentiator isn’t “answer quality” alone — it’s <b>follow-through</b>.
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>How it works (high level)</h2>
+          <ul class="bullets">
+            <li>WhatsApp → webhook → SQS FIFO → processor</li>
+            <li>Deterministic gates (rate limit, heuristics, relevance/quality)</li>
+            <li>Bedrock RAG (text) + Vision (images) + Polly/Transcribe (voice)</li>
+            <li>Weather-triggered nudges → reminders → DONE/NOT YET detection</li>
+          </ul>
+          <div class="ctaRow" style="margin-top: 14px">
+            <a
+              class="btn"
+              href="https://github.com/prasadt1/agrinexus-ai/blob/main/architecture/diagrams.md"
+              target="_blank"
+              rel="noreferrer"
+              >Architecture diagrams</a
+            >
+            <a
+              class="btn"
+              href="https://github.com/prasadt1/agrinexus-ai/blob/main/docs/METRICS-AND-MONITORING.md"
+              target="_blank"
+              rel="noreferrer"
+              >Metrics & monitoring</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div>© 2026 Prasad Tilloo · AgriNexus AI</div>
+        <div>
+          <a href="mailto:prasad@prasadtilloo.com?subject=AgriNexus%20Pilot%20Enquiry">Email</a>
+          ·
+          <a href="https://github.com/prasadt1/agrinexus-ai" target="_blank" rel="noreferrer">GitHub</a>
+          ·
+          <a href="https://demo.agrinexus-ai.farm/web-demo/live-2026-04-13b.html" target="_blank" rel="noreferrer"
+            >Web demo</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
